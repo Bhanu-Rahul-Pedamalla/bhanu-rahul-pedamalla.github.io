@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * 1" # weekly, so repo "Updated" dates and new public repos stay fresh
 
 permissions:
   contents: read
@@ -33,8 +35,10 @@ jobs:
           cp styles.css render.js app.js resume.json Bhanu_Pedamalla_Resume.pdf .nojekyll _site/
           if [ -f photo.jpg ]; then cp photo.jpg _site/; fi
 
-      - name: Pre-render index.html from resume.json
+      - name: Pre-render index.html from resume.json and GitHub repo data
         run: node build.js _site
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
