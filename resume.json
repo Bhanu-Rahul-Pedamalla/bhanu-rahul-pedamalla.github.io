@@ -1,0 +1,305 @@
+{
+  "basics": {
+    "name": "Bhanu Rahul Pedamalla",
+    "url": "https://bhanu-rahul-pedamalla.github.io/",
+    "credential": "M.S. Data Science",
+    "headline": "Software Engineer, Data Pipelines and Full-Stack",
+    "location": "Gainesville, FL",
+    "relocation": "Open to relocate",
+    "workAuthorization": "Authorized to work in the United States",
+    "email": "rahul24pedamalla2001@gmail.com",
+    "photo": "",
+    "resumePdf": "Bhanu_Pedamalla_Resume.pdf",
+    "profiles": [
+      {
+        "network": "GitHub",
+        "label": "github.com/Bhanu-Rahul-Pedamalla",
+        "url": "https://github.com/Bhanu-Rahul-Pedamalla"
+      }
+    ]
+  },
+  "about": [
+    "Software engineer, M.S. Data Science, shipping production systems end to end as the only engineer. Built a cancer casefinding pipeline over HL7 v2 and FHIR feeds with 278 of 279 case records correct, a shelf-scan conflation engine at 97.9% with zero wrong records, and a robot telemetry pipeline proven lossless across 63 trips.",
+    "Designed and shipped X Reacts alone: a live, mobile-first creator platform with real-time chat, real payments, creator and admin portals, and a video-sync engine.",
+    "Staged, versioned pipelines; every stage scored before the next; rules first, a language model only where rules stop; every number reproducible from one run."
+  ],
+  "experience": [
+    {
+      "title": "Founder & Engineer",
+      "company": "X Reacts / Pedamalla LLC",
+      "url": "https://xreacts.com",
+      "location": "Gainesville, FL",
+      "start": "Mar 2025",
+      "end": "Present",
+      "summary": "Live platform where creators react to videos on stream and viewers pay to take part.",
+      "highlights": [
+        "Designed and shipped the whole product alone: React/Vite front end, Firebase back end, 19+ surfaces (onboarding, creator studio, viewer page, earnings and withdrawals, admin portal, real-time chat) and a mobile admin app.",
+        "Wrote the video-sync algorithm that holds the viewer's player 4.6 s behind the creator's live stream through pauses, seeks and resumes, using playback-rate correction instead of hard seeks.",
+        "Built the checkout, payment and virtual-currency flow on real transactions with automated splits and refunds, and client-side NSFW moderation on uploads.",
+        "Ran a security hardening pass that moved trust from the client to the server, locked database rules and closed every identified vulnerability.",
+        "Owns the data layer, creator onboarding, support and payouts under Pedamalla LLC."
+      ]
+    },
+    {
+      "title": "Founder & Director",
+      "company": "Creator Management Agency",
+      "location": "India",
+      "start": "2022",
+      "end": "Dec 2023",
+      "summary": "",
+      "highlights": [
+        "Ran a cross-functional team across editing, design, scripting and account management for content creators; used performance data to set priorities and grow client reach."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Cancer Casefinding Pipeline",
+      "date": "Oct 2026",
+      "problem": "A hospital cancer registry receives pathology, admissions, clinical notes and billing from several systems, out of order and with mismatched identities. Output: one trusted record per cancer case, coded to NAACCR, exported for analytics.",
+      "stats": [
+        {
+          "value": "278 / 279",
+          "label": "records right"
+        },
+        {
+          "value": "0",
+          "label": "missed or duplicate cases"
+        },
+        {
+          "value": "$0.0054",
+          "label": "LLM bill"
+        }
+      ],
+      "highlights": [
+        "Simulated three hospitals sending HL7 v2.5.1 ORU and ADT (A04, A08, A40), FHIR R4 bundles and billing CSV: 1,320 Synthea patients, 3,554 arrivals, 279 reportable cases, 287 look-alikes, 19 planted problem types, and an ICD-O-3 coding change on day 11.",
+        "Built the pipeline: quarantine with a reason per rejected message; parse and normalize; patient resolution on SSN, merge links and a demographic threshold measured clean across 5 to 10; reconciliation of documents into cases; a reportability ladder of SEER rules with a language model only for the 61 reports no rule could decide; record versioning with a test that the record survives the coding change; NAACCR flat and OMOP exports served from DuckDB.",
+        "Result: 279 records, 278 right, 0 missed, 0 duplicate cases, 0 contested; every one of 3,554 arrivals accounted for as accepted, duplicate, quarantined or non-reportable. Every planted problem caught. LLM bill $0.0054, prompts cached, rerun byte-identical in 109 s.",
+        "Built the public replay page and report page: the feed plays on load, tapping a record pins its card, every number is baked at deploy and recounted at load, checked at 375 px and 1200 px with zero console errors."
+      ],
+      "links": [
+        {
+          "label": "Pipeline report",
+          "url": "https://registry-replay.web.app/pipeline"
+        },
+        {
+          "label": "Live replay",
+          "url": "https://registry-replay.web.app/"
+        },
+        {
+          "label": "Code",
+          "url": "https://github.com/Bhanu-Rahul-Pedamalla/casefinding-pipeline"
+        }
+      ]
+    },
+    {
+      "name": "Shelf-Scan Conflation Engine",
+      "date": "Oct 2026",
+      "problem": "A badge camera worn by store staff reads shelf labels as they walk. Reads arrive damaged, duplicated and re-sent, and the product catalog changes under them. Output: one record per shelf spot, matched to the catalog and served against the planogram.",
+      "stats": [
+        {
+          "value": "97.9%",
+          "label": "reads named right"
+        },
+        {
+          "value": "0",
+          "label": "wrong records"
+        },
+        {
+          "value": "$0.02",
+          "label": "LLM bill"
+        }
+      ],
+      "highlights": [
+        "Simulated the feed with real data: 3 stores, 7 aisles, 300 real products from Open Food Facts, 12 badge walks over 3 days, restocking between days, doubles in a frame, a second badge, re-sent frames, about 1 in 100 rows damaged, and a catalog change (3 renames, 2 new sizes with new barcodes, 1 discontinued, 1 new).",
+        "Built a 9-stage pipeline: ingest with quarantine and a reason for every dropped row; normalize; barcode and exact-text match; close spelling with the threshold read off a measured curve; same-spot and other-day evidence; a language model only for the 159 spots nothing else could name, accepted at \"sure\" only.",
+        "Golden record per shelf spot with survivorship by method rank (barcode > exact > close > same spot > other day > model), lineage across the catalog change, a test that the record survives the change, and DuckDB serving against the planogram with a compliance table per store, aisle and shelf.",
+        "Result: 5,927 lines in, 5,705 usable reads, 5,586 named right (97.9%), 3 wrong and none reached the record; 1,763 records, 0 wrong, 1 contested, 18 open; compliance 96.0% against a 96.5% truth, gap reconciled exactly.",
+        "Measured before choosing: Haiku vs Sonnet on 696 spots (both 0 wrong at \"sure\", Haiku 13.6x cheaper), four survivorship rules against the truth, slots vs clusters for spot grouping. LLM bill for the whole feed: $0.02.",
+        "Every stage scored before the next, byte-identical reruns, full run in 20 s with no API key. The report page counts every number from the data files at load."
+      ],
+      "links": [
+        {
+          "label": "Pipeline report",
+          "url": "https://shelf-replay.web.app/pipeline"
+        },
+        {
+          "label": "Live replay",
+          "url": "https://shelf-replay.web.app/web/"
+        },
+        {
+          "label": "Code",
+          "url": "https://github.com/Bhanu-Rahul-Pedamalla/shelf-conflation-engine"
+        }
+      ]
+    },
+    {
+      "name": "Robot Telemetry Pipeline",
+      "date": "Aug 2026",
+      "problem": "A hospital transport robot produces about 15,000 messages per trip across 13 sensor streams, and hospital WiFi drops in lifts. Every message must reach the cloud once, in order, provably.",
+      "stats": [
+        {
+          "value": "915,068",
+          "label": "messages, none lost"
+        },
+        {
+          "value": "63",
+          "label": "simulated trips"
+        },
+        {
+          "value": "7",
+          "label": "planted faults caught"
+        }
+      ],
+      "highlights": [
+        "Built a 7-stage pipeline: record every message to the robot's own disk before any transmission; transport; validate with the message id as primary key so duplicates are harmless; cold storage; refined table ordered by event time rather than arrival time. The robot keeps its copy until the server confirms the checksum, so a damaged segment can be repaired.",
+        "Simulated 63 trips with 38 network blackouts, 11 duplicate deliveries and 2 files corrupted in transit. Result: 915,068 messages produced, 915,068 in cold storage, 915,068 in the refined table, none lost. Every message ends as accepted, duplicate or quarantined with a reason, and the counts sum to what arrived.",
+        "A prove script plants seven faults and checks each is caught; a page check confirms the write-up has no hardcoded numbers."
+      ],
+      "links": [
+        {
+          "label": "Pipeline report",
+          "url": "https://rovi-replay.web.app/pipeline/"
+        },
+        {
+          "label": "Live sim",
+          "url": "https://rovi-replay.web.app/sim/"
+        },
+        {
+          "label": "Code",
+          "url": "https://github.com/Bhanu-Rahul-Pedamalla/rovi-pipeline"
+        }
+      ]
+    },
+    {
+      "name": "X Reacts",
+      "date": "Mar 2025 - Present",
+      "problem": "Live platform where creators react to videos on stream and viewers pay to take part. Designed and shipped alone.",
+      "stats": [
+        {
+          "value": "19+",
+          "label": "product surfaces"
+        },
+        {
+          "value": "4.6 s",
+          "label": "held sync offset"
+        }
+      ],
+      "highlights": [
+        "React/Vite front end, Firebase back end, 19+ surfaces (onboarding, creator studio, viewer page, earnings and withdrawals, admin portal, real-time chat) and a mobile admin app.",
+        "Video-sync algorithm that holds the viewer's player 4.6 s behind the creator's live stream through pauses, seeks and resumes, using playback-rate correction instead of hard seeks.",
+        "Checkout, payment and virtual-currency flow on real transactions with automated splits and refunds."
+      ],
+      "links": [
+        {
+          "label": "Live site",
+          "url": "https://xreacts.com"
+        }
+      ]
+    },
+    {
+      "name": "Penn Station Transfer-Risk Forecasting",
+      "date": "2025",
+      "context": "Graduate project, University of Texas at Arlington",
+      "problem": "",
+      "stats": [
+        {
+          "value": "75% → <20%",
+          "label": "transfer failure risk"
+        },
+        {
+          "value": "600,000+",
+          "label": "daily riders affected"
+        }
+      ],
+      "highlights": [
+        "Aggregated 142,844 multimodal records and 82,959 real-time arrivals from multiple sources into 299,186 engineered scenarios.",
+        "Cross-validated a predictive model and recommended a 2-3 minute transfer buffer that cuts failure risk from 75% to under 20%, affecting 600,000+ daily riders."
+      ],
+      "links": []
+    }
+  ],
+  "skills": [
+    {
+      "category": "Data pipelines",
+      "items": [
+        "Python",
+        "pandas",
+        "PyArrow/Parquet",
+        "DuckDB",
+        "SQL",
+        "HL7 v2 (ORU, ADT)",
+        "FHIR R4",
+        "NAACCR",
+        "ICD-O-3",
+        "OMOP CDM",
+        "Entity resolution and conflation",
+        "Golden records with survivorship rules",
+        "Schema and data versioning",
+        "Lineage",
+        "Deterministic reruns",
+        "Manifests and check lines",
+        "Quarantine and dedupe",
+        "Scorers against ground truth"
+      ]
+    },
+    {
+      "category": "Applied AI",
+      "items": [
+        "Claude API (Haiku, Sonnet)",
+        "Prompt caching",
+        "Measured model and threshold selection",
+        "Confidence gating",
+        "Cost per answer",
+        "rapidfuzz",
+        "Regex and rules-based normalization"
+      ]
+    },
+    {
+      "category": "Front end",
+      "items": [
+        "React",
+        "Vite",
+        "JavaScript",
+        "HTML5",
+        "CSS3",
+        "Tailwind CSS",
+        "Responsive mobile-first design down to 375 px",
+        "Reusable components",
+        "Real-time UI",
+        "Playwright for page checks"
+      ]
+    },
+    {
+      "category": "Back end and cloud",
+      "items": [
+        "Node",
+        "Firebase (Auth, Firestore, Cloud Functions, Storage, Hosting)",
+        "REST APIs",
+        "Payment integration with server-side verification",
+        "Security rules and role-based access",
+        "Cloudflare",
+        "Git and GitHub"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master of Science, Data Science",
+      "school": "University of Texas at Arlington",
+      "start": "Jan 2024",
+      "end": "Dec 2025",
+      "details": [
+        "GPA 3.9 / 4.0",
+        "STEM-designated"
+      ]
+    },
+    {
+      "degree": "B.Tech., Computer Science & Engineering",
+      "school": "Chalapathi Institute of Technology, India",
+      "start": "Jun 2018",
+      "end": "Jul 2022",
+      "details": []
+    }
+  ]
+}
