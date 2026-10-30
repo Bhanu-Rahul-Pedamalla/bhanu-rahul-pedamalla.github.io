@@ -190,8 +190,8 @@ main, aside { display: grid; gap: 8px; align-content: start; min-width: 0; }
 .contact-list .k { display: block; font-size: 13px; color: var(--muted); }
 .contact-list .v { word-break: break-word; font-size: 14px; }
 .demo-list { list-style: none; display: grid; gap: 10px; }
-.demo-list a { font-weight: 600; font-size: 14px; }
-.demo-list span { display: block; color: var(--muted); font-size: 13px; }
+.demo-list .demo-name { display: block; font-weight: 600; font-size: 14px; }
+.demo-list .demo-links { font-size: 13px; color: var(--muted); }
 
 .footer { text-align: center; color: var(--muted); font-size: 13px; padding: 8px 16px 32px; }
 

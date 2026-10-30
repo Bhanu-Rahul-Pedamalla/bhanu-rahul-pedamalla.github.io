@@ -83,7 +83,7 @@
           "url": "https://registry-replay.web.app/pipeline"
         },
         {
-          "label": "Live replay",
+          "label": "Simulation setup",
           "url": "https://registry-replay.web.app/"
         },
         {
@@ -124,7 +124,7 @@
           "url": "https://shelf-replay.web.app/pipeline"
         },
         {
-          "label": "Live replay",
+          "label": "Simulation setup",
           "url": "https://shelf-replay.web.app/web/"
         },
         {
@@ -162,7 +162,7 @@
           "url": "https://rovi-replay.web.app/pipeline/"
         },
         {
-          "label": "Live sim",
+          "label": "Simulation setup",
           "url": "https://rovi-replay.web.app/sim/"
         },
         {

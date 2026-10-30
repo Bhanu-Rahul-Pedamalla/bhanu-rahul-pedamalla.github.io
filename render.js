@@ -144,8 +144,8 @@
     var live = demos.length
       ? '<section class="card"><h2>Live work</h2><ul class="demo-list">' +
         demos.map(function (p) {
-          var l = p.links[0];
-          return "<li>" + ext(l.url, p.name) + "<span>" + esc(l.url.replace(/^https?:\/\//, "").replace(/\/$/, "")) + "</span></li>";
+          return '<li><span class="demo-name">' + esc(p.name) + '</span><span class="demo-links">' +
+            p.links.map(function (l) { return ext(l.url, l.label); }).join(" · ") + "</span></li>";
         }).join("") + "</ul></section>"
       : "";
     return contact + live;
